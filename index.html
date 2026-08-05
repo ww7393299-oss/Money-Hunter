@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Money Hunter - Stock Market & Trading Platform</title>
+    <meta name="description" content="Money Hunter - Premium Stock Trading & Investment Platform. Founded by Naresh Yadav. Trade Stocks, MTF Margin, Stock BeES ETFs, and Manage Portfolio.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="dark-theme">
+    <!-- Navigation Bar -->
+    <header class="main-header">
+        <div class="header-container">
+            <!-- Brand Logo -->
+            <div class="brand-logo" id="brandLogo">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-chart-line"></i>
+                </div>
+                <div class="logo-text">
+                    <span class="brand-name">MONEY<span class="accent-text">HUNTER</span></span>
+                    <span class="founder-tag">By Naresh Yadav</span>
+                </div>
+            </div>
+
+            <!-- Search Bar with Autocomplete -->
+            <div class="search-container">
+                <div class="search-input-wrapper">
+                    <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                    <input type="text" id="searchInput" placeholder="Search stocks, ETFs, indices (e.g. Reliance, NiftyBeES, Tata)..." autocomplete="off">
+                    <span class="search-shortcut">Ctrl + K</span>
+                </div>
+                <div class="search-results-dropdown" id="searchResults"></div>
+            </div>
+
+            <!-- Navigation Links -->
+            <nav class="nav-links">
+                <button class="nav-link active" data-tab="explore">
+                    <i class="fa-solid fa-compass"></i> Explore
+                </button>
+                <button class="nav-link" data-tab="holdings">
+                    <i class="fa-solid fa-briefcase"></i> Holdings <span class="badge" id="holdingsBadge">0</span>
+                </button>
+                <button class="nav-link" data-tab="mtf">
+                    <i class="fa-solid fa-bolt"></i> MTF 4x
+                </button>
+                <button class="nav-link" data-tab="bees">
+                    <i class="fa-solid fa-coins"></i> Stock BeES
+                </button>
+                <button class="nav-link" data-tab="wallet">
+                    <i class="fa-solid fa-wallet"></i> Wallet
+                </button>
+            </nav>
+
+            <!-- User Balance & Profile Controls -->
+            <div class="header-right">
+                <div class="wallet-badge" id="headerWalletBtn" title="View Wallet">
+                    <i class="fa-solid fa-indian-rupee-sign"></i>
+                    <span id="headerBalance">1,00,000.00</span>
+                </div>
+                <button class="auth-btn" id="openAuthModalBtn">
+                    <i class="fa-solid fa-user"></i> <span id="authBtnText">Sign In</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Real-Time Market Ticker Bar -->
+        <div class="market-ticker-bar">
+            <div class="ticker-scroll" id="tickerContainer">
+                <div class="ticker-item" id="ticker-nifty">
+                    <span class="ticker-name">NIFTY 50</span>
+                    <span class="ticker-val">24,520.40</span>
+                    <span class="ticker-change up">+142.30 (+0.58%)</span>
+                </div>
+                <div class="ticker-item" id="ticker-sensex">
+                    <span class="ticker-name">SENSEX</span>
+                    <span class="ticker-val">80,432.15</span>
+                    <span class="ticker-change up">+485.60 (+0.61%)</span>
+                </div>
+                <div class="ticker-item" id="ticker-banknifty">
+                    <span class="ticker-name">BANK NIFTY</span>
+                    <span class="ticker-val">52,140.80</span>
+                    <span class="ticker-change down">-95.40 (-0.18%)</span>
+                </div>
+                <div class="ticker-item" id="ticker-niftyit">
+                    <span class="ticker-name">NIFTY IT</span>
+                    <span class="ticker-val">40,890.25</span>
+                    <span class="ticker-change up">+312.10 (+0.77%)</span>
+                </div>
+                <div class="ticker-item" id="ticker-gold">
+                    <span class="ticker-name">GOLD BEES</span>
+                    <span class="ticker-val">68.45</span>
+                    <span class="ticker-change up">+0.45 (+0.66%)</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="app-main-content">
+        <!-- VIEW 1: EXPLORE / DASHBOARD -->
+        <section class="tab-view active" id="view-explore">
+            <!-- Hero Banner -->
+            <div class="hero-banner">
+                <div class="hero-banner-content">
+                    <span class="tag-pill"><i class="fa-solid fa-fire"></i> Money Hunter Special</span>
+                    <h2>Invest Smartly with Groww-Style Speed</h2>
+                    <p>Trade 3000+ Indian Stocks, 4x MTF Margin Trading & Low-Risk Stock BeES ETFs with zero hassle.</p>
+                    <div class="hero-actions">
+                        <button class="btn btn-primary" onclick="switchTab('mtf')"><i class="fa-solid fa-bolt"></i> Explore MTF 4x</button>
+                        <button class="btn btn-secondary" onclick="switchTab('bees')"><i class="fa-solid fa-coins"></i> Buy Stock BeES</button>
+                    </div>
+                </div>
+                <div class="hero-banner-stats">
+                    <div class="stat-card">
+                        <span class="stat-title">Market Sentiment</span>
+                        <span class="stat-value text-up"><i class="fa-solid fa-arrow-trend-up"></i> Bullish 78%</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-title">Founder</span>
+                        <span class="stat-value">Naresh Yadav</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sector Quick Filter Bar -->
+            <div class="section-header">
+                <h3 class="section-title"><i class="fa-solid fa-layer-group"></i> Market Watch</h3>
+                <div class="filter-pills" id="sectorPills">
+                    <button class="pill active" data-filter="all">All Stocks</button>
+                    <button class="pill" data-filter="largecap">Large Cap</button>
+                    <button class="pill" data-filter="tech">IT & Tech</button>
+                    <button class="pill" data-filter="banking">Banking & Finance</button>
+                    <button class="pill" data-filter="auto">Automobile</button>
+                    <button class="pill" data-filter="mtf">MTF 4x Eligible</button>
+                </div>
+            </div>
+
+            <!-- Stocks Grid -->
+            <div class="stocks-grid" id="exploreStocksGrid"></div>
+
+            <!-- Top Gainers & Losers Split Section -->
+            <div class="split-market-section">
+                <div class="market-list-card">
+                    <div class="card-header">
+                        <h4><i class="fa-solid fa-arrow-trend-up text-up"></i> Top Gainers Today</h4>
+                        <span class="live-dot">LIVE</span>
+                    </div>
+                    <div class="market-list" id="topGainersList"></div>
+                </div>
+
+                <div class="market-list-card">
+                    <div class="card-header">
+                        <h4><i class="fa-solid fa-arrow-trend-down text-down"></i> Top Losers Today</h4>
+                        <span class="live-dot">LIVE</span>
+                    </div>
+                    <div class="market-list" id="topLosersList"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW 2: HOLDINGS & PORTFOLIO -->
+        <section class="tab-view" id="view-holdings">
+            <div class="portfolio-summary-bar">
+                <div class="summary-box">
+                    <span class="box-label">Total Investment</span>
+                    <span class="box-value" id="portTotalInvested">₹0.00</span>
+                </div>
+                <div class="summary-box">
+                    <span class="box-label">Current Value</span>
+                    <span class="box-value" id="portCurrentVal">₹0.00</span>
+                </div>
+                <div class="summary-box">
+                    <span class="box-label">Total Returns</span>
+                    <span class="box-value" id="portTotalReturns">₹0.00 (0.00%)</span>
+                </div>
+                <div class="summary-box">
+                    <span class="box-label">1-Day Returns</span>
+                    <span class="box-value" id="portOneDayReturns">+₹0.00 (+0.00%)</span>
+                </div>
+            </div>
+
+            <div class="section-header">
+                <h3 class="section-title"><i class="fa-solid fa-chart-pie"></i> Your Portfolio Holdings</h3>
+                <div class="portfolio-actions">
+                    <button class="btn btn-sm btn-outline" id="refreshHoldingsBtn"><i class="fa-solid fa-arrows-rotate"></i> Refresh Prices</button>
+                </div>
+            </div>
+
+            <!-- Holdings Table -->
+            <div class="table-container">
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th>Stock / Instrument</th>
+                            <th>Type</th>
+                            <th>Qty</th>
+                            <th>Avg. Price</th>
+                            <th>Current Price</th>
+                            <th>Current Value</th>
+                            <th>Total P&L</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="holdingsTableBody">
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="empty-state" id="emptyHoldingsState">
+                <i class="fa-solid fa-box-open empty-icon"></i>
+                <h3>No Holdings Found</h3>
+                <p>You haven't bought any stocks yet. Explore top stocks and start your investment journey with Money Hunter!</p>
+                <button class="btn btn-primary" onclick="switchTab('explore')"><i class="fa-solid fa-magnifying-glass"></i> Explore Stocks</button>
+            </div>
+        </section>
+
+        <!-- VIEW 3: MTF (MARGIN TRADING FACILITY) -->
+        <section class="tab-view" id="view-mtf">
+            <div class="mtf-hero-card">
+                <div class="mtf-info">
+                    <span class="mtf-tag"><i class="fa-solid fa-bolt"></i> Buy Stocks with 4x-5x Power</span>
+                    <h2>Margin Trading Facility (MTF)</h2>
+                    <p>Pay only 20% to 25% of stock value today. Money Hunter funds the remaining 75%-80% balance so you can maximize your profits on top stocks!</p>
+                    <ul class="mtf-features">
+                        <li><i class="fa-solid fa-check text-up"></i> Instant 4x Purchasing Power</li>
+                        <li><i class="fa-solid fa-check text-up"></i> Hold position for unlimited days</li>
+                        <li><i class="fa-solid fa-check text-up"></i> Lowest daily interest rates (0.04%/day)</li>
+                    </ul>
+                </div>
+                <div class="mtf-calculator-box">
+                    <h4><i class="fa-solid fa-calculator"></i> Quick MTF Power Calculator</h4>
+                    <div class="form-group">
+                        <label>Enter Your Capital (₹):</label>
+                        <input type="number" id="mtfCalcInput" value="10000" min="1000" step="1000">
+                    </div>
+                    <div class="calc-result">
+                        <span>Total Buying Power:</span>
+                        <strong class="text-accent" id="mtfCalcPower">₹40,000.00</strong>
+                    </div>
+                    <div class="calc-sub">Extra ₹30,000 funded by Money Hunter</div>
+                </div>
+            </div>
+
+            <div class="section-header">
+                <h3 class="section-title"><i class="fa-solid fa-fire-flame-curved"></i> Top MTF Eligible Stocks</h3>
+            </div>
+            <div class="stocks-grid" id="mtfStocksGrid"></div>
+        </section>
+
+        <!-- VIEW 4: STOCK BEES (ETFS) -->
+        <section class="tab-view" id="view-bees">
+            <div class="bees-hero-card">
+                <div class="bees-info">
+                    <span class="bees-tag"><i class="fa-solid fa-shield-halved"></i> Low Risk Index Investments</span>
+                    <h2>Stock BeES & Index ETFs</h2>
+                    <p>Invest in India's top indices, Gold, IT, and Banks in small amounts starting from just ₹50. Diversified basket of shares with low volatility.</p>
+                </div>
+            </div>
+
+            <div class="section-header">
+                <h3 class="section-title"><i class="fa-solid fa-coins"></i> Popular Benchmark BeES</h3>
+            </div>
+            <div class="stocks-grid" id="beesGrid"></div>
+        </section>
+
+        <!-- VIEW 5: WALLET & TRANSACTIONS -->
+        <section class="tab-view" id="view-wallet">
+            <div class="wallet-dashboard-grid">
+                <div class="wallet-card main-balance-card">
+                    <span class="card-subtitle">Money Hunter Available Balance</span>
+                    <h1 class="main-balance-val" id="walletAvailableBalance">₹1,00,000.00</h1>
+                    <div class="wallet-breakdown">
+                        <div>
+                            <span>Used Margin:</span>
+                            <strong id="walletUsedMargin">₹0.00</strong>
+                        </div>
+                        <div>
+                            <span>Withdrawable:</span>
+                            <strong id="walletWithdrawable">₹1,00,000.00</strong>
+                        </div>
+                    </div>
+                    <div class="wallet-actions">
+                        <button class="btn btn-success btn-lg" id="openAddMoneyBtn"><i class="fa-solid fa-plus-circle"></i> Add Money</button>
+                        <button class="btn btn-outline btn-lg" id="openWithdrawBtn"><i class="fa-solid fa-arrow-up-right-from-square"></i> Withdraw</button>
+                    </div>
+                </div>
+
+                <div class="wallet-card stats-summary-card">
+                    <h4><i class="fa-solid fa-building-columns"></i> Linked Demat Account</h4>
+                    <div class="demat-info">
+                        <div class="info-row">
+                            <span>Account Holder:</span>
+                            <strong id="dematHolderName">Naresh Yadav Trader</strong>
+                        </div>
+                        <div class="info-row">
+                            <span>Client ID:</span>
+                            <strong>MH-894201</strong>
+                        </div>
+                        <div class="info-row">
+                            <span>Primary Bank:</span>
+                            <strong>HDFC Bank (**** 4892)</strong>
+                        </div>
+                        <div class="info-row">
+                            <span>Platform Founder:</span>
+                            <strong class="text-accent">Naresh Yadav</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-header">
+                <h3 class="section-title"><i class="fa-solid fa-list-check"></i> Passbook & Transaction Ledger</h3>
+            </div>
+            <div class="table-container">
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th>Date & Time</th>
+                            <th>Transaction Type</th>
+                            <th>Description</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="walletTransactionsBody">
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="app-footer">
+        <div class="footer-container">
+            <div class="footer-col brand-col">
+                <div class="brand-logo">
+                    <i class="fa-solid fa-chart-line"></i> MONEY<span class="accent-text">HUNTER</span>
+                </div>
+                <p>India's modern Groww-style Stock Trading & Investment Platform.</p>
+                <div class="founder-badge">
+                    <i class="fa-solid fa-crown text-warning"></i> Founded by <strong>Naresh Yadav</strong>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <a href="#" onclick="switchTab('explore')">Explore Stocks</a>
+                <a href="#" onclick="switchTab('mtf')">MTF 4x Trading</a>
+                <a href="#" onclick="switchTab('bees')">Stock BeES ETFs</a>
+                <a href="#" onclick="switchTab('holdings')">My Portfolio</a>
+            </div>
+            <div class="footer-col">
+                <h4>Products</h4>
+                <a href="#">Stocks & F&O</a>
+                <a href="#">Margin Trading (MTF)</a>
+                <a href="#">ETFs & Index Funds</a>
+                <a href="#">IPOs & Sovereign Gold</a>
+            </div>
+            <div class="footer-col">
+                <h4>Support & Disclaimer</h4>
+                <p class="disclaimer-text">Money Hunter is a simulated Groww-style trading frontend platform for learning stock market operations.</p>
+                <span class="copyright">© 2026 Money Hunter Inc. All rights reserved.</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAL 1: STOCK TRADING & CHART MODAL -->
+    <div class="modal-overlay" id="tradeModal">
+        <div class="modal-container trade-modal-container">
+            <button class="modal-close-btn" id="closeTradeModalBtn">&times;</button>
+            <div class="trade-modal-grid">
+                <!-- Left Column: Chart & Info -->
+                <div class="trade-modal-left">
+                    <div class="stock-header-info">
+                        <div class="stock-title-wrap">
+                            <span class="stock-icon-circle" id="modalStockIcon">R</span>
+                            <div>
+                                <h2 id="modalStockName">Reliance Industries</h2>
+                                <span class="stock-symbol-tag" id="modalStockSymbol">RELIANCE</span>
+                                <span class="badge badge-mtf" id="modalStockMtfBadge">MTF 4x</span>
+                            </div>
+                        </div>
+                        <div class="stock-price-wrap">
+                            <h2 class="current-price" id="modalStockPrice">₹2,940.50</h2>
+                            <span class="price-change up" id="modalStockChange">+35.20 (+1.21%)</span>
+                        </div>
+                    </div>
+
+                    <!-- Timeframe buttons -->
+                    <div class="chart-timeframes">
+                        <button class="tf-btn active" data-tf="1D">1D</button>
+                        <button class="tf-btn" data-tf="1W">1W</button>
+                        <button class="tf-btn" data-tf="1M">1M</button>
+                        <button class="tf-btn" data-tf="1Y">1Y</button>
+                        <button class="tf-btn" data-tf="ALL">ALL</button>
+                    </div>
+
+                    <!-- Canvas Stock Chart -->
+                    <div class="canvas-chart-wrapper">
+                        <canvas id="stockChartCanvas" width="550" height="260"></canvas>
+                    </div>
+
+                    <!-- Key Stats Grid -->
+                    <div class="stock-stats-grid">
+                        <div class="stat-item">
+                            <span>Day Low</span>
+                            <strong id="modalDayLow">₹2,910.00</strong>
+                        </div>
+                        <div class="stat-item">
+                            <span>Day High</span>
+                            <strong id="modalDayHigh">₹2,958.00</strong>
+                        </div>
+                        <div class="stat-item">
+                            <span>52W High</span>
+                            <strong id="modal52High">₹3,217.00</strong>
+                        </div>
+                        <div class="stat-item">
+                            <span>Market Cap</span>
+                            <strong id="modalMktCap">₹19.8L Cr</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Order Placement Form -->
+                <div class="trade-modal-right">
+                    <div class="order-type-tabs">
+                        <button class="tab-btn active buy-tab" id="orderBuyTab">BUY</button>
+                        <button class="tab-btn sell-tab" id="orderSellTab">SELL</button>
+                    </div>
+
+                    <div class="product-type-selector">
+                        <label class="radio-card active">
+                            <input type="radio" name="productType" value="DELIVERY" checked>
+                            <span>Delivery</span>
+                        </label>
+                        <label class="radio-card">
+                            <input type="radio" name="productType" value="INTRADAY">
+                            <span>Intraday</span>
+                        </label>
+                        <label class="radio-card">
+                            <input type="radio" name="productType" value="MTF">
+                            <span>MTF (4x Margin)</span>
+                        </label>
+                    </div>
+
+                    <form id="orderForm" class="order-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Quantity (Shares)</label>
+                                <input type="number" id="orderQty" min="1" value="10">
+                            </div>
+                            <div class="form-group">
+                                <label>Order Price (₹)</label>
+                                <input type="number" id="orderPrice" step="0.05" readonly>
+                            </div>
+                        </div>
+
+                        <div class="order-summary-box">
+                            <div class="summary-line">
+                                <span>Required Amount:</span>
+                                <strong id="orderRequiredAmt">₹29,405.00</strong>
+                            </div>
+                            <div class="summary-line text-muted">
+                                <span>Available Balance:</span>
+                                <span id="orderAvailBal">₹1,00,000.00</span>
+                            </div>
+                            <div class="summary-line text-muted">
+                                <span>Brokerage & Charges:</span>
+                                <span class="text-up">₹0.00 (FREE)</span>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-success btn-block btn-lg" id="submitOrderBtn">
+                            <i class="fa-solid fa-bolt"></i> PLACE BUY ORDER
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 2: ADD MONEY MODAL -->
+    <div class="modal-overlay" id="addMoneyModal">
+        <div class="modal-container sm-modal">
+            <button class="modal-close-btn" id="closeAddMoneyBtn">&times;</button>
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-wallet text-up"></i> Add Money to Money Hunter</h3>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Enter Amount (₹):</label>
+                    <input type="number" id="addAmountInput" value="5000" min="100" step="500">
+                </div>
+                <div class="quick-amounts">
+                    <button class="amount-btn" onclick="setAddAmount(500)">+ ₹500</button>
+                    <button class="amount-btn" onclick="setAddAmount(2000)">+ ₹2,000</button>
+                    <button class="amount-btn" onclick="setAddAmount(5000)">+ ₹5,000</button>
+                    <button class="amount-btn" onclick="setAddAmount(10000)">+ ₹10,000</button>
+                </div>
+
+                <label style="margin-top: 15px; display:block;">Select Payment Mode:</label>
+                <div class="payment-methods-grid">
+                    <label class="pay-method-card active">
+                        <input type="radio" name="payMethod" value="UPI" checked>
+                        <i class="fa-solid fa-mobile-screen-button text-up"></i> Instant UPI (GPay/PhonePe)
+                    </label>
+                    <label class="pay-method-card">
+                        <input type="radio" name="payMethod" value="NETBANKING">
+                        <i class="fa-solid fa-building-columns text-accent"></i> Net Banking (HDFC/ICICI)
+                    </label>
+                </div>
+
+                <button class="btn btn-success btn-block btn-lg" id="confirmAddMoneyBtn" style="margin-top: 20px;">
+                    <i class="fa-solid fa-lock"></i> PROCEED TO ADD MONEY
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 3: WITHDRAW MONEY MODAL -->
+    <div class="modal-overlay" id="withdrawModal">
+        <div class="modal-container sm-modal">
+            <button class="modal-close-btn" id="closeWithdrawBtn">&times;</button>
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-arrow-up-right-from-square text-accent"></i> Withdraw Funds</h3>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Enter Amount to Withdraw (₹):</label>
+                    <input type="number" id="withdrawAmountInput" value="1000" min="100">
+                </div>
+                <div class="info-alert">
+                    <i class="fa-solid fa-info-circle"></i> Withdrawable Balance: <strong id="withdrawModalMax">₹1,00,000.00</strong>
+                </div>
+
+                <div class="form-group" style="margin-top: 15px;">
+                    <label>Linked Bank Account:</label>
+                    <select id="withdrawBankSelect" class="custom-select">
+                        <option value="HDFC">HDFC Bank - A/C ending in 4892</option>
+                        <option value="SBI">State Bank of India - A/C ending in 1104</option>
+                    </select>
+                </div>
+
+                <button class="btn btn-primary btn-block btn-lg" id="confirmWithdrawBtn" style="margin-top: 20px;">
+                    <i class="fa-solid fa-paper-plane"></i> CONFIRM WITHDRAWAL
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 4: AUTH & USER PROFILE MODAL -->
+    <div class="modal-overlay" id="authModal">
+        <div class="modal-container sm-modal">
+            <button class="modal-close-btn" id="closeAuthBtn">&times;</button>
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-user-shield text-accent"></i> Money Hunter Account</h3>
+            </div>
+            <div class="modal-body">
+                <div id="authFormView">
+                    <div class="form-group">
+                        <label>Mobile Number or Email:</label>
+                        <input type="text" id="authInput" placeholder="+91 9876543210 / user@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Password / OTP:</label>
+                        <input type="password" id="authPassInput" value="123456">
+                    </div>
+                    <button class="btn btn-success btn-block btn-lg" id="loginSubmitBtn">
+                        SIGN IN / REGISTER
+                    </button>
+                </div>
+
+                <div id="userProfileView" style="display: none;">
+                    <div class="profile-card-details">
+                        <div class="profile-avatar">
+                            <i class="fa-solid fa-user-astronaut"></i>
+                        </div>
+                        <h3 id="profUserName">Naresh Yadav</h3>
+                        <p id="profUserContact">+91 9876543210</p>
+                        <div class="badge badge-success">Demat Active (KYC Verified)</div>
+                    </div>
+                    <hr style="border-color: rgba(255,255,255,0.1); margin: 15px 0;">
+                    <div class="profile-meta">
+                        <p><strong>Platform Founder:</strong> Naresh Yadav</p>
+                        <p><strong>Demat Client ID:</strong> MH-894201</p>
+                        <p><strong>Account Status:</strong> Premium Pro Trader</p>
+                    </div>
+                    <button class="btn btn-outline btn-block" id="logoutBtn" style="margin-top: 15px;">
+                        <i class="fa-solid fa-sign-out-alt"></i> LOGOUT
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div id="toastContainer"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
